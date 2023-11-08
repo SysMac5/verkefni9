@@ -112,7 +112,7 @@ function createSearchResults(results, query) {
           'p',
           { class: 'status' },
           '🚀 ',
-          result.status.name ?? '_no_status_name_',
+          result.status?.name ?? '_no_status_name_',
         ),
         el(
           'p',
@@ -240,12 +240,12 @@ export async function renderDetails(parentElement, id) {
     'h2',
     {},
     'Staða: ',
-    result.status.name ?? '_no_status_name_',
+    result.status?.name ?? '_no_status_name_',
   );
   const statusDescriptionElement = el(
     'p',
     {},
-    result.status.description ?? '_no_status_description_',
+    result.status?.description ?? '_no_status_description_',
   );
   container.appendChild(statusNameElement);
   container.appendChild(statusDescriptionElement);
@@ -254,12 +254,12 @@ export async function renderDetails(parentElement, id) {
     'h2',
     {},
     'Geimferð: ',
-    result.mission.name ?? '_no_mission_name_',
+    result.mission?.name ?? '_no_mission_name_',
   );
   const missionDescriptionElement = el(
     'p',
     {},
-    result.mission.description ?? '_no_mission_description_',
+    result.mission?.description ?? '_no_mission_description_',
   );
   container.appendChild(missionNameElement);
   container.appendChild(missionDescriptionElement);
