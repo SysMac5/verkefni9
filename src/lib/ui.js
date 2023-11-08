@@ -12,7 +12,7 @@ export function renderSearchForm(searchHandler, query = undefined) {
     'form',
     {},
     el('input', { value: query ?? '', name: query }),
-    el('button', {}, 'Leita')
+    el('button', {}, 'Leita'),
   );
 
   form.addEventListener('submit', searchHandler);
@@ -80,7 +80,7 @@ function createSearchResults(results, query) {
     const noResultElement = el(
       'p',
       { class: 'info' },
-      `Villa við leit að ${query}.`
+      `Villa við leit að ${query}.`,
     );
     resultsElement.appendChild(noResultElement);
     return resultsElement;
@@ -90,32 +90,36 @@ function createSearchResults(results, query) {
     const noResultElement = el(
       'p',
       { class: 'info' },
-      `Engar niðurstöður fyrir leit að ${query}.`
+      `Engar niðurstöður fyrir leit að ${query}.`,
     );
     resultsElement.appendChild(noResultElement);
     return resultsElement;
   }
 
   for (const result of results) {
-    const nameElement = el('a', { href: `/?id=${result.id}` }, result.name);
-
-    const columnElement = el(
-      'td',
-      { class: 'result' },
-      el('h2', { class: 'name' }, nameElement),
-      el('p', { class: 'status' }, '🚀 ', result.status.name),
-      el(
-        'p',
-        { class: 'mission' },
-        el('strong', {}, 'Geimferð: '),
-        result.mission,
-      )
-    );
-
-    const rowElement = el('tr');
-    rowElement.appendChild(columnElement);
-
-    tableElement.appendChild(rowElement);
+    try {
+      const nameElement = el('a', { href: `/?id=${result.id}` }, result.name);
+  
+      const columnElement = el(
+        'td',
+        { class: 'result' },
+        el('h2', { class: 'name' }, nameElement),
+        el('p', { class: 'status' }, '🚀 ', result.status.name),
+        el(
+          'p',
+          { class: 'mission' },
+          el('strong', {}, 'Geimferð: '),
+          result.mission,
+        ),
+      );
+  
+      const rowElement = el('tr');
+      rowElement.appendChild(columnElement);
+  
+      tableElement.appendChild(rowElement);
+    } catch (e) {
+      console.error('Tókst ekki að birta ', result, e)
+    }
   }
 
   resultsElement.appendChild(tableElement);
@@ -165,7 +169,7 @@ export function renderFrontpage(
   const heading = el(
     'h1',
     { class: 'heading', 'data-foo': 'bar' },
-    'Geimskotaleitin 🚀'
+    'Geimskotaleitin 🚀',
   );
   const searchForm = renderSearchForm(searchHandler, query);
   const container = el('main', {}, heading, searchForm);
@@ -199,7 +203,7 @@ export async function renderDetails(parentElement, id) {
     const noResultElement = el(
       'p',
       { class: 'info' },
-      'Villa við að sækja geimskot'
+      'Villa við að sækja geimskot',
     );
     container.appendChild(noResultElement);
     return;
@@ -212,7 +216,7 @@ export async function renderDetails(parentElement, id) {
     'p',
     {},
     'Gluggi opnast: ',
-    result.window_start
+    result.window_start,
   );
   const windowEndElement = el('p', {}, 'Gluggi lokast: ', result.window_end);
   container.appendChild(windowStartElement);
@@ -234,7 +238,7 @@ export async function renderDetails(parentElement, id) {
   const backElement = el(
     'div',
     { class: 'back' },
-    el('a', { href: '', onclick: 'window.history.back()' }, 'Til baka')
+    el('a', { href: '', onclick: 'window.history.back()' }, 'Til baka'),
   );
   container.appendChild(backElement);
 }
