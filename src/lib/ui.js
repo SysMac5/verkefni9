@@ -98,27 +98,36 @@ function createSearchResults(results, query) {
 
   for (const result of results) {
     try {
-      const nameElement = el('a', { href: `/?id=${result.id}` }, result.name);
-  
+      const nameElement = el(
+        'a',
+        { href: `/?id=${result.id}` },
+        result.name ?? '_no_name_',
+      );
+
       const columnElement = el(
         'td',
         { class: 'result' },
         el('h2', { class: 'name' }, nameElement),
-        el('p', { class: 'status' }, '🚀 ', result.status.name),
+        el(
+          'p',
+          { class: 'status' },
+          '🚀 ',
+          result.status.name ?? '_no_status_name_',
+        ),
         el(
           'p',
           { class: 'mission' },
           el('strong', {}, 'Geimferð: '),
-          result.mission,
+          result.mission ?? '_no_mission_',
         ),
       );
-  
+
       const rowElement = el('tr');
       rowElement.appendChild(columnElement);
-  
+
       tableElement.appendChild(rowElement);
     } catch (e) {
-      console.error('Tókst ekki að birta ', result, e)
+      console.error('Tókst ekki að birta ', result, e);
     }
   }
 
@@ -209,30 +218,53 @@ export async function renderDetails(parentElement, id) {
     return;
   }
 
-  const nameElement = el('h1', {}, result.name);
+  const nameElement = el('h1', {}, result.name ?? '_no_name_');
   container.appendChild(nameElement);
 
   const windowStartElement = el(
     'p',
     {},
     'Gluggi opnast: ',
-    result.window_start,
+    result.window_start ?? '_no_window_start_',
   );
-  const windowEndElement = el('p', {}, 'Gluggi lokast: ', result.window_end);
+  const windowEndElement = el(
+    'p',
+    {},
+    'Gluggi lokast: ',
+    result.window_end ?? '_no_window_end_',
+  );
   container.appendChild(windowStartElement);
   container.appendChild(windowEndElement);
 
-  const statusNameElement = el('h2', {}, 'Staða: ', result.status.name);
-  const statusDescriptionElement = el('p', {}, result.status.description);
+  const statusNameElement = el(
+    'h2',
+    {},
+    'Staða: ',
+    result.status.name ?? '_no_status_name_',
+  );
+  const statusDescriptionElement = el(
+    'p',
+    {},
+    result.status.description ?? '_no_status_description_',
+  );
   container.appendChild(statusNameElement);
   container.appendChild(statusDescriptionElement);
 
-  const missionNameElement = el('h2', {}, 'Geimferð: ', result.mission.name);
-  const missionDescriptionElement = el('p', {}, result.mission.description);
+  const missionNameElement = el(
+    'h2',
+    {},
+    'Geimferð: ',
+    result.mission.name ?? '_no_mission_name_',
+  );
+  const missionDescriptionElement = el(
+    'p',
+    {},
+    result.mission.description ?? '_no_mission_description_',
+  );
   container.appendChild(missionNameElement);
   container.appendChild(missionDescriptionElement);
 
-  const imageElement = el('img', { src: result.image });
+  const imageElement = el('img', { src: result.image ?? '' });
   container.appendChild(imageElement);
 
   const backElement = el(
