@@ -8,9 +8,11 @@ import { el } from './elements.js';
  * @returns {HTMLElement} Leitarform.
  */
 export function renderSearchForm(searchHandler, query = undefined) {
-  const form =  el('form', { }, 
-    el('input', { value: query ?? '', name: query }), 
-    el('button', { }, 'Leita')
+  const form = el(
+    'form',
+    {},
+    el('input', { value: query ?? '', name: query }),
+    el('button', {}, 'Leita'),
   );
 
   form.addEventListener('submit', searchHandler);
@@ -71,28 +73,43 @@ function setNotLoading(parentElement, searchForm = undefined) {
  * @param {string} query Leitarstrengur.
  */
 function createSearchResults(results, query) {
-  const resultsElement = el('div', { class: 'results' })
-  const tableElement = el('table', { });
+  const resultsElement = el('div', { class: 'results' });
+  const tableElement = el('table', {});
 
   if (!results) {
-    const noResultElement = el('p', { class: 'info' }, `Villa við leit að ${query}.`);
+    const noResultElement = el(
+      'p',
+      { class: 'info' },
+      `Villa við leit að ${query}.`,
+    );
     resultsElement.appendChild(noResultElement);
     return resultsElement;
   }
 
   if (results.length === 0) {
-    const noResultElement = el('p', { class: 'info' }, `Engar niðurstöður fyrir leit að ${query}.`);
+    const noResultElement = el(
+      'p',
+      { class: 'info' },
+      `Engar niðurstöður fyrir leit að ${query}.`,
+    );
     resultsElement.appendChild(noResultElement);
     return resultsElement;
   }
 
   for (const result of results) {
-    const nameElement = el('a', { 'href': `/?id=${result.id}` }, result.name);
+    const nameElement = el('a', { href: `/?id=${result.id}` }, result.name);
 
-    const columnElement = el('td', { class: 'result'},
+    const columnElement = el(
+      'td',
+      { class: 'result' },
       el('h2', { class: 'name' }, nameElement),
       el('p', { class: 'status' }, '🚀 ', result.status.name),
-      el('p', { class: 'mission' }, el('strong', { }, 'Geimferð: '), result.mission)
+      el(
+        'p',
+        { class: 'mission' },
+        el('strong', {}, 'Geimferð: '),
+        result.mission,
+      ),
     );
 
     const rowElement = el('tr');
@@ -145,7 +162,11 @@ export function renderFrontpage(
   searchHandler,
   query = undefined,
 ) {
-  const heading = el('h1', { class: 'heading', 'data-foo': 'bar' }, 'Geimskotaleitin 🚀');
+  const heading = el(
+    'h1',
+    { class: 'heading', 'data-foo': 'bar' },
+    'Geimskotaleitin 🚀',
+  );
   const searchForm = renderSearchForm(searchHandler, query);
   const container = el('main', {}, heading, searchForm);
   parentElement.appendChild(container);
@@ -175,36 +196,45 @@ export async function renderDetails(parentElement, id) {
   // myndum vilja gera það þyrftum við að skilgreina stöðu fyrir niðurstöðu
   if (!result) {
     /* TODO útfæra villu og tómt state */
-    const noResultElement = el('p', { class: 'info' }, 'Villa við að sækja geimskot');
+    const noResultElement = el(
+      'p',
+      { class: 'info' },
+      'Villa við að sækja geimskot',
+    );
     container.appendChild(noResultElement);
     return;
   }
 
-  const nameElement = el('h1', { }, result.name);
+  const nameElement = el('h1', {}, result.name);
   container.appendChild(nameElement);
 
-  const windowStartElement = el('p', { }, 'Gluggi opnast: ', result.window_start);
-  const windowEndElement = el('p', { }, 'Gluggi lokast: ', result.window_end);
+  const windowStartElement = el(
+    'p',
+    {},
+    'Gluggi opnast: ',
+    result.window_start,
+  );
+  const windowEndElement = el('p', {}, 'Gluggi lokast: ', result.window_end);
   container.appendChild(windowStartElement);
   container.appendChild(windowEndElement);
 
-  const statusNameElement = el('h2', { }, 'Staða: ', result.status.name);
-  const statusDescriptionElement = el('p', { }, result.status.description);
+  const statusNameElement = el('h2', {}, 'Staða: ', result.status.name);
+  const statusDescriptionElement = el('p', {}, result.status.description);
   container.appendChild(statusNameElement);
   container.appendChild(statusDescriptionElement);
 
-  const missionNameElement = el('h2', { }, 'Geimferð: ', result.mission.name);
-  const missionDescriptionElement = el('p', { }, result.mission.description);
+  const missionNameElement = el('h2', {}, 'Geimferð: ', result.mission.name);
+  const missionDescriptionElement = el('p', {}, result.mission.description);
   container.appendChild(missionNameElement);
   container.appendChild(missionDescriptionElement);
 
-  const imageElement = el('img', { 'src': result.image });
+  const imageElement = el('img', { src: result.image });
   container.appendChild(imageElement);
 
   const backElement = el(
     'div',
     { class: 'back' },
-    el('a', { 'href': '', 'onclick': 'window.history.back()' }, 'Til baka'),
+    el('a', { href: '', onclick: 'window.history.back()' }, 'Til baka'),
   );
   container.appendChild(backElement);
 }

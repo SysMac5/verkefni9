@@ -35,11 +35,9 @@ function route() {
 
   const query = qs.get('query') ?? undefined;
   const id = qs.get('id');
- 
+
   const parentElement = document.body;
-  while (parentElement.firstChild) {
-    parentElement.removeChild(parentElement.firstChild);
-  }
+  empty(parentElement);
 
   if (id) {
     renderDetails(parentElement, id);
