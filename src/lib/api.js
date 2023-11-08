@@ -11,7 +11,7 @@
  */
 
 /** Grunnslóð á API */
-const API_URL = 'https://ll.thespacedevs.com/2.2.0/';
+const API_URL = 'https://lldev.thespacedevs.com/2.2.0/';
 
 /**
  * Skilar Promise sem bíður í gefnar millisekúndur.
